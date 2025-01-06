@@ -17,6 +17,7 @@ public record UserDto(
     @Size(min = 6, max = 20, message = "Password must be between 6 and 20 characters")
     String password,
 
+    @NotNull(message = "Role is required")
     Role role,
     String status,
     String token) {
