@@ -12,6 +12,10 @@ import java.util.List;
 
 @Entity
 @Table(name = "users")
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserEntity implements UserDetails {
 
 
@@ -31,20 +35,6 @@ public class UserEntity implements UserDetails {
   private String token;
 
 
-  public UserEntity() {
-
-  }
-
-  public UserEntity(Integer id, String name, String email, String password, Role role, String status, String token) {
-    this.id = id;
-    this.name = name;
-    this.email = email;
-    this.password = password;
-    this.role = role;
-    this.status = status;
-    this.token = token;
-  }
-
   public UserEntity(UserDto userDto) {
     this.id = userDto.id();
     this.name = userDto.name();
@@ -63,62 +53,6 @@ public class UserEntity implements UserDetails {
   @Override
   public String getUsername() {
     return this.email;
-  }
-
-  public Integer getId() {
-    return id;
-  }
-
-  public void setId(Integer id) {
-    this.id = id;
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public String getEmail() {
-    return email;
-  }
-
-  public void setEmail(String email) {
-    this.email = email;
-  }
-
-  public String getPassword() {
-    return password;
-  }
-
-  public void setPassword(String password) {
-    this.password = password;
-  }
-
-  public Role getRole() {
-    return role;
-  }
-
-  public void setRole(Role role) {
-    this.role = role;
-  }
-
-  public String getStatus() {
-    return status;
-  }
-
-  public void setStatus(String status) {
-    this.status = status;
-  }
-
-  public String getToken() {
-    return token;
-  }
-
-  public void setToken(String token) {
-    this.token = token;
   }
 }
 
