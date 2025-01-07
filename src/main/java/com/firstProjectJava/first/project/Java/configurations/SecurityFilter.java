@@ -1,17 +1,15 @@
 package com.firstProjectJava.first.project.Java.configurations;
 
-import com.firstProjectJava.first.project.Java.services.auth.CustomUserDetailsService;
+import com.firstProjectJava.first.project.Java.models.enums.Role;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.authentication.preauth.AbstractPreAuthenticatedProcessingFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -30,6 +28,10 @@ public class SecurityFilter {
         .authorizeHttpRequests((requests) -> requests
             .requestMatchers(HttpMethod.POST, "/user", "/user/auth").permitAll()
             .requestMatchers("/h2-console/**").permitAll()
+            .requestMatchers(HttpMethod.POST, "/product").hasRole(Role.ADMIN.name())
+            .requestMatchers(HttpMethod.DELETE, "/product/**").hasRole(Role.ADMIN.name())
+            .requestMatchers(HttpMethod.POST, "/category").hasRole(Role.ADMIN.name())
+            .requestMatchers(HttpMethod.DELETE, "/category/**").hasRole(Role.ADMIN.name())
             .anyRequest().authenticated()
         ).sessionManagement((session) -> session
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
