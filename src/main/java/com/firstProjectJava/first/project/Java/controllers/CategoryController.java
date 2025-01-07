@@ -35,15 +35,15 @@ public class CategoryController {
   }
 
   @PutMapping("{id}")
-  public ResponseEntity<ResponseDto<CategoryDto>> update(@PathVariable("id") Integer id, CategoryDto categoryDto) {
+  public ResponseEntity<ResponseDto<?>> update(@PathVariable("id") Integer id, CategoryDto categoryDto) {
     categoryService.update(id, categoryDto);
-    return ResponseEntity.ok(ResponseDto.of("category updated successfully", null));
+    return ResponseEntity.ok(ResponseDto.of("category updated successfully"));
   }
 
   @DeleteMapping("{id}")
-  public ResponseEntity<ResponseDto<String>> remove(@PathVariable("id") Integer id) {
+  public ResponseEntity<ResponseDto<?>> remove(@PathVariable("id") Integer id) {
     categoryService.remove(id);
-    return ResponseEntity.ok(ResponseDto.of("category removed successfully", null));
+    return ResponseEntity.ok(ResponseDto.of("category removed successfully"));
   }
 
 }
