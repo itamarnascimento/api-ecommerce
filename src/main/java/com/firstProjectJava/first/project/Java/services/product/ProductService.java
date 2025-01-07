@@ -2,7 +2,9 @@ package com.firstProjectJava.first.project.Java.services.product;
 
 import com.firstProjectJava.first.project.Java.dtos.CategoryDto;
 import com.firstProjectJava.first.project.Java.dtos.ProductDto;
+import com.firstProjectJava.first.project.Java.exceptions.ExceptionInsufficientQuantity;
 import com.firstProjectJava.first.project.Java.exceptions.ExceptionNotFound;
+import com.firstProjectJava.first.project.Java.exceptions.ExecptionInvalidValue;
 import com.firstProjectJava.first.project.Java.models.CategoryEntity;
 import com.firstProjectJava.first.project.Java.models.ProductEntity;
 import com.firstProjectJava.first.project.Java.repositories.ProductRepository;
@@ -59,7 +61,28 @@ public class ProductService {
     return new ProductDto(productRepository.save(productEntity));
   }
 
-  public List<ProductEntity> findAllByCategoryId(Integer id){
+  public List<ProductEntity> findAllByCategoryId(Integer id) {
     return productRepository.findAllByCategoryId(id);
   }
+
+  public void validPriceAndQuantity(int id, int quantity) {
+    ProductDto productDto = this.findOne(id);
+    this.validIfQuantityProductEnough(id, quantity);
+    this.validIfPriceNotNegativeOrZero(productDto);
+  }
+
+  public void validIfPriceNotNegativeOrZero(ProductDto productDto) {
+    if (productDto.price() <= 0) {
+      throw new ExecptionInvalidValue("Invalid price");
+    }
+  }
+
+  public void validIfQuantityProductEnough(int id, int quantity) {
+    ProductDto productDto = this.findOne(id);
+    if (productDto.quantity() < quantity) {
+      throw new ExceptionInsufficientQuantity();
+    }
+  }
+
+
 }
