@@ -1,6 +1,5 @@
 package com.firstProjectJava.first.project.Java.services.product;
 
-import com.firstProjectJava.first.project.Java.dtos.CategoryDto;
 import com.firstProjectJava.first.project.Java.dtos.ProductDto;
 import com.firstProjectJava.first.project.Java.exceptions.ExceptionInsufficientQuantity;
 import com.firstProjectJava.first.project.Java.exceptions.ExceptionNotFound;

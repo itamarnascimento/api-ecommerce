@@ -9,6 +9,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.security.Key;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.Date;
 
 
@@ -27,7 +30,7 @@ public class JwtSecurity {
     return Jwts.builder()
         .setSubject(user.getEmail())
         .setIssuer(String.valueOf(new Date()))
-        .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
+        .setExpiration(getTimeExperionToken())
         .signWith(key, SignatureAlgorithm.HS256)
         .compact();
   }
@@ -51,6 +54,13 @@ public class JwtSecurity {
   public Date extractExpriteAt(String token) {
     Claims claims = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
     return claims.getExpiration();
+  }
+
+  private Date getTimeExperionToken() {
+    ZoneOffset zoneOffset = ZoneOffset.ofHours(-3);
+    Instant instant = LocalDateTime.now().plusHours(2)
+        .toInstant(zoneOffset);
+    return Date.from(instant);
   }
 
 }

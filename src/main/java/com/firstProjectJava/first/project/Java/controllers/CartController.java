@@ -5,8 +5,10 @@ import com.firstProjectJava.first.project.Java.dtos.ResponseDto;
 import com.firstProjectJava.first.project.Java.services.BaseService;
 import com.firstProjectJava.first.project.Java.services.cart.CartService;
 import jakarta.validation.Valid;
+import jakarta.websocket.server.PathParam;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -23,9 +25,11 @@ public class CartController {
   private final CartService cartService;
 
   @PostMapping
-  public ResponseEntity<ResponseDto<CartDto>> create(@RequestBody @Valid CartDto data, UriComponentsBuilder uriComponentsBuilder) {
-    ResponseDto<CartDto> cartCreatedSuccessfully = ResponseDto.of("Cart created successfully", cartService.create(data));
-    URI uri = uriComponentsBuilder.fromUri(URI.create("/cart/{id}")).buildAndExpand(cartCreatedSuccessfully.data().id()).toUri();
+  public ResponseEntity<ResponseDto<CartDto>> create(@RequestBody @Valid CartDto data) {
+    CartDto cartDto = cartService.create(data);
+    ResponseDto<CartDto> cartCreatedSuccessfully = ResponseDto.of("Cart created successfully", cartDto);
+
+    URI uri = UriComponentsBuilder.fromPath("/cart/{id}" ).buildAndExpand(cartDto.id()).toUri();
     return ResponseEntity.created(uri).body(cartCreatedSuccessfully);
   }
 
@@ -36,9 +40,8 @@ public class CartController {
   }
 
   @GetMapping
-  public ResponseEntity<ResponseDto<List<CartDto>>> findAll() {
-    List<CartDto> list = cartService.findAll();
-    return ResponseEntity.ok(ResponseDto.of("Find All Cart", list));
+  public Page<CartDto> findAll(@RequestParam(defaultValue = "0") Integer page, @RequestParam(defaultValue = "10") Integer size) {
+    return cartService.findAll(page, size);
   }
 
   @DeleteMapping("{id}")

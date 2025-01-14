@@ -7,9 +7,10 @@ import com.firstProjectJava.first.project.Java.repositories.CartItemRepository;
 import com.firstProjectJava.first.project.Java.services.BaseService;
 import com.firstProjectJava.first.project.Java.services.product.ProductService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -37,8 +38,9 @@ public class CartItemService implements BaseService<CartItemDto, Integer> {
   }
 
   @Override
-  public List<CartItemDto> findAll() {
-    return cartItemRepository.findAll().stream().map(this::toDto).toList();
+  public Page<CartItemDto> findAll(Integer pageIndex, Integer size) {
+    Pageable page = PageRequest.of(pageIndex, size);
+    return cartItemRepository.findAll(page).map(CartItemDto::new);
 
   }
 

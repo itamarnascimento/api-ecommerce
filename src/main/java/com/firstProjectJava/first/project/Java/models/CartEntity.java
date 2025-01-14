@@ -7,10 +7,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
-@Table(name = "carts")
 @Entity
+@Table(name = "carts")
 @Getter
 @Setter
 @AllArgsConstructor
@@ -19,6 +20,8 @@ public class CartEntity {
   @Id
   @GeneratedValue
   private Integer id;
+
+  @OneToOne
   private UserEntity user;
   private Double amount;
 
@@ -30,6 +33,6 @@ public class CartEntity {
     this.user = new UserEntity();
     this.user.setId(cartDto.userId());
     this.amount = cartDto.amount();
-    this.cartItems = cartDto.cartItems().stream().map(CartItemEntity::new).toList();
+    this.cartItems = new ArrayList<>();
   }
 }

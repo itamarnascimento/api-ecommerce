@@ -39,7 +39,7 @@ public class ErrorHandlerController {
 
   @ExceptionHandler(ExpiredJwtException.class)
   public ResponseEntity<ErrorResponse<?>> handleException(ExpiredJwtException e) {
-    return ResponseEntity.status(400).body(new ErrorResponse<>("Token Expired"));
+    return ResponseEntity.status(403).body(new ErrorResponse<>("Token Expired"));
   }
 
   @ExceptionHandler(ExceptionInsufficientQuantity.class)

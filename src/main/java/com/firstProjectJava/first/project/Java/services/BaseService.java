@@ -1,6 +1,7 @@
 package com.firstProjectJava.first.project.Java.services;
 
 import com.firstProjectJava.first.project.Java.dtos.CartDto;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -10,7 +11,7 @@ public interface BaseService<T, I> {
 
   T findOne(I id);
 
-  List<T> findAll();
+  Page<T> findAll(Integer page, Integer size);
 
   void remove(I id);
 
