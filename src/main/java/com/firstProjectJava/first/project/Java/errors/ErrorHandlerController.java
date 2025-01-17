@@ -5,6 +5,7 @@ import com.firstProjectJava.first.project.Java.exceptions.ExceptionCannotRemove;
 import com.firstProjectJava.first.project.Java.exceptions.ExceptionInsufficientQuantity;
 import com.firstProjectJava.first.project.Java.exceptions.ExceptionNotFound;
 import com.firstProjectJava.first.project.Java.exceptions.ExecptionInvalidValue;
+import io.jsonwebtoken.ClaimJwtException;
 import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.ResponseEntity;
@@ -37,9 +38,9 @@ public class ErrorHandlerController {
     return ResponseEntity.status(409).body(new ErrorResponse<>(e.getMessage()));
   }
 
-  @ExceptionHandler(ExpiredJwtException.class)
-  public ResponseEntity<ErrorResponse<?>> handleException(ExpiredJwtException e) {
-    return ResponseEntity.status(403).body(new ErrorResponse<>("Token Expired"));
+  @ExceptionHandler({ExpiredJwtException.class, ClaimJwtException.class})
+  public ResponseEntity<ErrorResponse<?>> handleException(ClaimJwtException e) {
+    return ResponseEntity.status(403).body(new ErrorResponse<>("Token Expired " + e.getMessage()));
   }
 
   @ExceptionHandler(ExceptionInsufficientQuantity.class)

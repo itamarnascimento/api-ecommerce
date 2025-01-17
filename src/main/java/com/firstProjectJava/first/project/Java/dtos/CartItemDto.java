@@ -13,4 +13,5 @@ public record CartItemDto(
     this(cartItemEntity.getId(), new ProductDto(cartItemEntity.getProductEntity()),
         cartItemEntity.getQuantity(), cartItemEntity.getCart().getId());
   }
+
 }

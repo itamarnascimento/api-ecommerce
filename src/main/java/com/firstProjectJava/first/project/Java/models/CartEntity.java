@@ -1,6 +1,7 @@
 package com.firstProjectJava.first.project.Java.models;
 
 import com.firstProjectJava.first.project.Java.dtos.CartDto;
+import com.firstProjectJava.first.project.Java.dtos.ResponseCartItems;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -33,6 +34,5 @@ public class CartEntity {
     this.user = new UserEntity();
     this.user.setId(cartDto.userId());
     this.amount = cartDto.amount();
-    this.cartItems = new ArrayList<>();
   }
 }

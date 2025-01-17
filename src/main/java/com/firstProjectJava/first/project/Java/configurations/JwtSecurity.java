@@ -41,6 +41,7 @@ public class JwtSecurity {
     return equals && !tokenExpired;
   }
 
+
   public String extractUsername(String token) {
     Claims claims = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
     return claims.getSubject();

@@ -17,7 +17,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("cart")
+@RequestMapping("carts")
 @RequiredArgsConstructor
 
 public class CartController {

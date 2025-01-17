@@ -26,12 +26,12 @@ public class SecurityFilter {
     http
         .csrf(AbstractHttpConfigurer::disable)
         .authorizeHttpRequests((requests) -> requests
-            .requestMatchers(HttpMethod.POST, "/user", "/user/auth").permitAll()
+            .requestMatchers(HttpMethod.POST, "/users", "/users/auth").permitAll()
             .requestMatchers("/h2-console/**").permitAll()
-            .requestMatchers(HttpMethod.POST, "/product").hasRole(Role.ADMIN.name())
-            .requestMatchers(HttpMethod.DELETE, "/product/**").hasRole(Role.ADMIN.name())
-            .requestMatchers(HttpMethod.POST, "/category").hasRole(Role.ADMIN.name())
-            .requestMatchers(HttpMethod.DELETE, "/category/**").hasRole(Role.ADMIN.name())
+            .requestMatchers(HttpMethod.POST, "/products").hasRole(Role.ADMIN.name())
+            .requestMatchers(HttpMethod.DELETE, "/products/**").hasRole(Role.ADMIN.name())
+            .requestMatchers(HttpMethod.POST, "/categories").hasRole(Role.ADMIN.name())
+            .requestMatchers(HttpMethod.DELETE, "/categories/**").hasRole(Role.ADMIN.name())
             .anyRequest().authenticated()
         ).sessionManagement((session) -> session
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS)

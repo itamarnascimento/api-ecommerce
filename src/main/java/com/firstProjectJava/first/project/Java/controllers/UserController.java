@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RestController
 @ResponseBody
-@RequestMapping("user")
+@RequestMapping("users")
 public class UserController {
   private final UserService userService;
   private final AuthService authService;

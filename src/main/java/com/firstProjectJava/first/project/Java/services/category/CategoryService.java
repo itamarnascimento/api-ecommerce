@@ -7,8 +7,10 @@ import com.firstProjectJava.first.project.Java.models.CategoryEntity;
 import com.firstProjectJava.first.project.Java.models.ProductEntity;
 import com.firstProjectJava.first.project.Java.repositories.CategoryRepository;
 import com.firstProjectJava.first.project.Java.repositories.ProductRepository;
-import com.firstProjectJava.first.project.Java.services.product.ProductService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -46,7 +48,8 @@ public class CategoryService {
     new CategoryDto(categoryRepository.save(categoryEntity));
   }
 
-  public List<CategoryDto> findAll() {
-    return categoryRepository.findAll().stream().map(CategoryDto::new).toList();
+  public Page<CategoryDto> findAll(Integer pageIndex, Integer size) {
+    Pageable page = PageRequest.of(pageIndex, size);
+    return categoryRepository.findAll(page).map(CategoryDto::new);
   }
 }
